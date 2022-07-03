@@ -43,7 +43,7 @@ namespace ESP8266VarIOT {
     //% pw.defl=your_pw
     export function connectWifi(tx: SerialPin, rx: SerialPin, baudrate: BaudRate, ssid: string, pw: string) {
         wifi_connected = false
-        thingspeak_connected = false
+        variot_connected = false
         serial.redirect(
             tx,
             rx,
@@ -70,9 +70,9 @@ namespace ESP8266VarIOT {
             sendAT("AT+CIPSTART=\"TCP\",\"" + ip + "\"," + port, 0) // connect to website server
             variot_connected = waitResponse()
             basic.pause(100)
-            if (thingspeak_connected) {
+            if (variot_connected) {
                 last_upload_successful = false
-                let str: string = "POST /api/v1/" + write_api_key + "/telemetry" + "\r\n" + "Content-Type: application/json" + "\r\n\r\n" + "{\" + label + "\": " + value + "}" + "\r\n\r\n"
+                let str: string = "POST /api/v1/" + write_api_key + "/telemetry" + "\r\n" + "Content-Type: application/json" + "\r\n\r\n" + "{\"" + label + "\": " + value + "}" + "\r\n\r\n"
                 sendAT("AT+CIPSEND=" + (str.length + 2))
                 sendAT(str, 0) // upload data
                 last_upload_successful = waitResponse()

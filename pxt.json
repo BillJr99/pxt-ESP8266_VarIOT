@@ -3,7 +3,8 @@
     "version": "0.0.3",
     "description": "MakeCode extension for ESP8266 Wifi module and ThingSpeak IoT",
     "dependencies": {
-        "core": "*"
+        "core": "*",
+        "microphone": "*"
     },
     "files": [
         "README.md",
@@ -12,5 +13,12 @@
     "testFiles": [
         "test.ts"
     ],
-    "public": true
+    "public": true,
+    "targetVersions": {
+        "target": "5.0.6",
+        "targetId": "microbit"
+    },
+    "supportedTargets": [
+        "microbit"
+    ]
 }
