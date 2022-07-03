@@ -62,8 +62,8 @@ namespace ESP8266VarIOT {
     */
     //% block="Upload data to VarIOT|URL/IP = %ip|Port = %port|Write API key = %write_api_key|Label = %label|Value = %value"
     //% ip.defl=variot.ece.drexel.edu
-    //% port.defl=443
     //% write_api_key.defl=your_write_api_key
+    //% port.defl=443
     //% label.defl=Label
     //% value.defl=0
     export function sendVarIOTTelemetry(ip: string, write_api_key: string, port: string, label: string, value: number) {
