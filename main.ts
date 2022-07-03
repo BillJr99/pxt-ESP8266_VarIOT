@@ -74,8 +74,9 @@ namespace ESP8266VarIOT {
             basic.pause(100)
             if (variot_connected) {
                 last_upload_successful = false
-                //let str: string = "POST /api/v1/" + write_api_key + "/telemetry" + "\r\n" + "Content-Type: application/json" + "\r\n\r\n" + "{\"" + label + "\": " + value + "}" + "\r\n\r\n"
-                let str: string = "POST /" + endpoint + "\r\n" + "Content-Type: application/json" + "\r\n\r\n" + "{\"" + label + "\": " + value + "}" + "\r\n\r\n"
+                let body: string = "{\"" + label + "\": " + value + "}"
+                //let str: string = "POST /api/v1/" + write_api_key + "/telemetry HTTP/1.1" + "\r\n" + "Content-Type: application/json" + "\r\n" + "Content-Length: " + body.length + "\r\n\r\n" + body + "\r\n\r\n"
+                let str: string = "POST /" + endpoint + " HTTP/1.1\r\n" + "Content-Type: application/json" + "\r\n" + "Content-Length: " + body.length + "\r\n\r\n" + body + "\r\n\r\n"
                 sendAT("AT+CIPSEND=" + str.length)
                 sendAT(str, 0) // upload data
                 last_upload_successful = waitResponse()
