@@ -1,7 +1,7 @@
 {
-    "name": "pxt-esp8266_thingspeak",
-    "version": "0.0.3",
-    "description": "MakeCode extension for ESP8266 Wifi module and ThingSpeak IoT",
+    "name": "pxt-esp8266_variot",
+    "version": "0.0.1",
+    "description": "MakeCode extension for ESP8266 Wifi module and VarIOT",
     "dependencies": {
         "core": "*",
         "microphone": "*"
@@ -9,9 +9,6 @@
     "files": [
         "README.md",
         "main.ts"
-    ],
-    "testFiles": [
-        "test.ts"
     ],
     "public": true,
     "targetVersions": {
