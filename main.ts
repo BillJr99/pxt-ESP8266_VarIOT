@@ -60,7 +60,7 @@ namespace ESP8266VarIOT {
     /**
     * Connect to VarIOT and upload data. It would not upload anything if it failed to connect to Wifi or VarIOT.
     */
-    //% block="Upload data to VarIOT|URL/IP = %ip|Write API key = %write_api_key|Label = %label|Value = %value"
+    //% block="Upload data to VarIOT|URL/IP = %ip|Port = %port|Write API key = %write_api_key|Label = %label|Value = %value"
     //% ip.defl=variot.ece.drexel.edu
     //% write_api_key.defl=your_write_api_key
     //% port.defl=1883
