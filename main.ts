@@ -99,15 +99,15 @@ namespace ESP8266VarIOT {
     }
 
     /**
-    * Check if ESP8266 successfully connected to ThingSpeak
+    * Check if ESP8266 successfully connected to VarIOT
     */
-    //% block="ThingSpeak connected ?"
-    export function isThingSpeakConnected() {
-        return thingspeak_connected
+    //% block="VarIOT connected ?"
+    export function isVarIOTConnected() {
+        return variot_connected
     }
 
     /**
-    * Check if ESP8266 successfully uploaded data to ThingSpeak
+    * Check if ESP8266 successfully uploaded data to VarIOT
     */
     //% block="Last data upload successful ?"
     export function isLastUploadSuccessful() {
