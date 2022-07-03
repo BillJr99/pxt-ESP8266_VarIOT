@@ -66,8 +66,8 @@ namespace ESP8266VarIOT {
     //% endpoint.defl=mongan
     //% label.defl=temp
     //% value.defl=45
-    export function sendVarIOTTelemetry(ip: string, write_api_key: string, port: string, endpoint: string, label: string, value: number) {
-        if (wifi_connected && write_api_key != "") {
+    export function sendVarIOTTelemetry(ip: string, port: string, endpoint: string, label: string, value: number) {
+        if (wifi_connected) {
             variot_connected = false
             sendAT("AT+CIPSTART=\"TCP\",\"" + ip + "\"," + port, 0) // connect to website server
             variot_connected = waitResponse()
