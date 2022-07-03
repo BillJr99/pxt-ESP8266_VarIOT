@@ -80,6 +80,7 @@ namespace ESP8266VarIOT {
                 sendAT(str, 0) // upload data
                 last_upload_successful = waitResponse()
                 basic.pause(100)
+                sendAT("AT+CIPCLOSE") // close TCP connection
             }
         }
     }
