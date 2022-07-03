@@ -1,3 +1,7 @@
+# MakeCode Extension for ESP8266 Wifi Modules and VarIOT IoT Platform
+
+This extension is based upon a form from [https://github.com/alankrantas/pxt-ESP8266_ThingSpeak](https://github.com/alankrantas/pxt-ESP8266_ThingSpeak) for the ThingSpeak platform, for use with micro:bit and the ESP8266 wifi module with VarIOT.
+
 # MakeCode Extension for ESP8266 Wifi Modules and ThingSpeak IoT Platform
 
 ![pctdetail 775-090 1](https://user-images.githubusercontent.com/44191076/50425186-76ada780-08ac-11e9-956c-9ebd6be09bb2.jpg)
