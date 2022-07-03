@@ -60,13 +60,14 @@ namespace ESP8266VarIOT {
     /**
     * Connect to VarIOT and upload data. It would not upload anything if it failed to connect to Wifi or VarIOT.
     */
-    //% block="Upload data to VarIOT|URL/IP = %ip|Port = %port|Write API key = %write_api_key|Label = %label|Value = %value"
-    //% ip.defl=variot.ece.drexel.edu
+    //% block="Upload data to VarIOT|URL/IP = %ip|Port = %port|Endpoint = %endpoint|Write API key = %write_api_key|Label = %label|Value = %value"
+    //% ip.defl=rpi4-variot
     //% write_api_key.defl=your_write_api_key
-    //% port.defl=443
-    //% label.defl=Label
-    //% value.defl=0
-    export function sendVarIOTTelemetry(ip: string, write_api_key: string, port: string, label: string, value: number) {
+    //% port.defl=5000
+    //% endpoint.defl=mongan
+    //% label.defl=temp
+    //% value.defl=45
+    export function sendVarIOTTelemetry(ip: string, write_api_key: string, port: string, endpoint: string, label: string, value: number) {
         if (wifi_connected && write_api_key != "") {
             variot_connected = false
             sendAT("AT+CIPSTART=\"TCP\",\"" + ip + "\"," + port, 0) // connect to website server
@@ -74,7 +75,8 @@ namespace ESP8266VarIOT {
             basic.pause(100)
             if (variot_connected) {
                 last_upload_successful = false
-                let str: string = "POST /api/v1/" + write_api_key + "/telemetry" + "\r\n" + "Content-Type: application/json" + "\r\n\r\n" + "{\"" + label + "\": " + value + "}" + "\r\n\r\n"
+                //let str: string = "POST /api/v1/" + write_api_key + "/telemetry" + "\r\n" + "Content-Type: application/json" + "\r\n\r\n" + "{\"" + label + "\": " + value + "}" + "\r\n\r\n"
+                let str: string = "POST /" + endpoint + "\r\n" + "Content-Type: application/json" + "\r\n\r\n" + "{\"" + label + "\": " + value + "}" + "\r\n\r\n"
                 sendAT("AT+CIPSEND=" + (str.length + 2))
                 sendAT(str, 0) // upload data
                 last_upload_successful = waitResponse()
