@@ -72,14 +72,10 @@ namespace ESP8266VarIOT {
         variot_port = port
     }
 
-    /**
-    * Connect to VarIOT and upload data. It would not upload anything if it failed to connect to Wifi or VarIOT.
-    */
-    //% block="Upload data to VarIOT|Endpoint = %endpoint|Label = %label|Value = %value"
-    //% endpoint.defl=mongan
-    //% label.defl=temp
-    //% value.defl=45
-    export function sendVarIOTTelemetry(endpoint: string, label: string, value: number) {
+    /** 
+     * Upload data via HTTP through wifi
+     */
+    function doHTTP(str: string) {
         if (wifi_connected && variot_configured) {
             variot_connected = false
             sendAT("AT+CIPSTART=\"TCP\",\"" + variot_ip + "\"," + variot_port, 0) // connect to website server
@@ -87,8 +83,6 @@ namespace ESP8266VarIOT {
             basic.pause(100)
             if (variot_connected) {
                 last_upload_successful = false
-                let body: string = "{\"" + label + "\": " + value + "}"
-                let str: string = "POST /" + endpoint + " HTTP/1.1\r\n" + "Content-Type: application/json" + "\r\n" + "Content-Length: " + body.length + "\r\n\r\n" + body + "\r\n\r\n"
                 sendAT("AT+CIPSEND=" + str.length)
                 sendAT(str, 0) // upload data
                 last_upload_successful = waitResponse()
@@ -100,6 +94,19 @@ namespace ESP8266VarIOT {
     }
 
     /**
+    * Connect to VarIOT and upload data. It would not upload anything if it failed to connect to Wifi or VarIOT.
+    */
+    //% block="Upload data to VarIOT|Endpoint = %endpoint|Label = %label|Value = %value"
+    //% endpoint.defl=mongan
+    //% label.defl=temp
+    //% value.defl=45
+    export function sendVarIOTTelemetry(endpoint: string, label: string, value: number) {
+        let body: string = "{\"" + label + "\": " + value + "}"
+        let str: string = "POST /" + endpoint + " HTTP/1.1\r\n" + "Content-Type: application/json" + "\r\n" + "Content-Length: " + body.length + "\r\n\r\n" + body + "\r\n\r\n"
+        doHTTP(str)
+    }
+
+    /**
     * Connect to VarIOT and upload data given a device name. It would not upload anything if it failed to connect to Wifi or VarIOT.
     */
     //% block="Upload data to VarIOT|Endpoint = %endpoint|Device Name = %devicename|Label = %label|Value = %value"
@@ -108,23 +115,9 @@ namespace ESP8266VarIOT {
     //% label.defl=temp
     //% value.defl=45
     export function sendVarIOTTelemetryByDeviceName(endpoint: string, devicename: string, label: string, value: number) {
-        if (wifi_connected && variot_configured) {
-            variot_connected = false
-            sendAT("AT+CIPSTART=\"TCP\",\"" + variot_ip + "\"," + variot_port, 0) // connect to website server
-            variot_connected = waitResponse()
-            basic.pause(100)
-            if (variot_connected) {
-                last_upload_successful = false
-                let body: string = "{\"" + label + "\": " + value + ", \"sensorName\": " + devicename + "\"}"
-                let str: string = "POST /" + endpoint + " HTTP/1.1\r\n" + "Content-Type: application/json" + "\r\n" + "Content-Length: " + body.length + "\r\n\r\n" + body + "\r\n\r\n"
-                sendAT("AT+CIPSEND=" + str.length)
-                sendAT(str, 0) // upload data
-                last_upload_successful = waitResponse()
-                basic.pause(100)
-                sendAT("AT+CIPCLOSE") // close TCP connection
-                waitResponse()
-            }
-        }
+        let body: string = "{\"" + label + "\": " + value + ", \"sensorName\": " + devicename + "\"}"
+        let str: string = "POST /" + endpoint + " HTTP/1.1\r\n" + "Content-Type: application/json" + "\r\n" + "Content-Length: " + body.length + "\r\n\r\n" + body + "\r\n\r\n"
+        doHTTP(str)
     }
 
     /**
