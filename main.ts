@@ -116,7 +116,7 @@ namespace ESP8266VarIOT {
     //% label.defl=temp
     //% value.defl=45
     export function sendVarIOTTelemetryByDeviceName(endpoint: string, devicename: string, label: string, value: number) {
-        let body: string = "{\"" + label + "\": " + value + ", \"sensorName\": " + devicename + "\"}"
+        let body: string = "{\"" + label + "\": " + value + ", \"sensorName\": \"" + devicename + "\"}"
         let str: string = "POST /" + endpoint + " HTTP/1.1\r\n" + "Content-Type: application/json" + "\r\n" + "Content-Length: " + body.length + "\r\n\r\n" + body + "\r\n\r\n"
         doHTTP(str)
     }
