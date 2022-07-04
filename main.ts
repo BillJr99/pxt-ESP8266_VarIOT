@@ -63,7 +63,7 @@ namespace ESP8266VarIOT {
     /**
     * Configure VarIOT gateway location
     */
-    //% block="Upload data to VarIOT|URL/IP = %ip|Port = %port"
+    //% block="Configure VarIOT gateway location|URL/IP = %ip|Port = %port"
     //% ip.defl=rpi4-variot
     //% port.defl=5000
     export function configureVarIOT(ip: string, port: string) {
