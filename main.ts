@@ -80,7 +80,7 @@ namespace ESP8266VarIOT {
     //% label.defl=temp
     //% value.defl=45
     export function sendVarIOTTelemetry(endpoint: string, label: string, value: number) {
-        if (wifi_connected) {
+        if (wifi_connected && variot_configured) {
             variot_connected = false
             sendAT("AT+CIPSTART=\"TCP\",\"" + variot_ip + "\"," + variot_port, 0) // connect to website server
             variot_connected = waitResponse()
