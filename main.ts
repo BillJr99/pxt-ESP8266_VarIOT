@@ -112,7 +112,7 @@ namespace ESP8266VarIOT {
     */
     //% block="Upload data to VarIOT|Endpoint = %endpoint|Device Name = %devicename|Label = %label|Value = %value"
     //% endpoint.defl=mongan
-    //% devicename.defl=Mongan Gateway
+    //% devicename.defl="Mongan Gateway"
     //% label.defl=temp
     //% value.defl=45
     export function sendVarIOTTelemetryByDeviceName(endpoint: string, devicename: string, label: string, value: number) {
