@@ -1,5 +1,5 @@
 /**
- * MakeCode extension for ESP8266 Wifi modules and VarIOT
+ * MakeCode extension for ESP8266 Wifi modules and VarIOT via ThingsBoard
  */
 //% color=#009b5b icon="\uf1eb" block="ESP8266 VarIOT"
 namespace ESP8266VarIOT {
@@ -7,6 +7,9 @@ namespace ESP8266VarIOT {
     let wifi_connected: boolean = false
     let variot_connected: boolean = false
     let last_upload_successful: boolean = false
+    let variot_configured: boolean = false
+    let variot_ip: string = ""
+    let variot_port: string = ""
 
     // write AT command with CR+LF ending
     function sendAT(command: string, wait: number = 100) {
@@ -60,22 +63,31 @@ namespace ESP8266VarIOT {
     /**
     * Connect to VarIOT and upload data. It would not upload anything if it failed to connect to Wifi or VarIOT.
     */
-    //% block="Upload data to VarIOT|URL/IP = %ip|Port = %port|Endpoint = %endpoint|Label = %label|Value = %value"
+    //% block="Upload data to VarIOT|URL/IP = %ip|Port = %port"
     //% ip.defl=rpi4-variot
     //% port.defl=5000
+    export function configureVarIOT(ip: string, port: string) {
+        variot_configured = true
+        variot_ip = ip
+        variot_port = port
+    }
+
+    /**
+    * Connect to VarIOT and upload data. It would not upload anything if it failed to connect to Wifi or VarIOT.
+    */
+    //% block="Upload data to VarIOT|Endpoint = %endpoint|Label = %label|Value = %value"
     //% endpoint.defl=mongan
     //% label.defl=temp
     //% value.defl=45
-    export function sendVarIOTTelemetry(ip: string, port: string, endpoint: string, label: string, value: number) {
+    export function sendVarIOTTelemetry(endpoint: string, label: string, value: number) {
         if (wifi_connected) {
             variot_connected = false
-            sendAT("AT+CIPSTART=\"TCP\",\"" + ip + "\"," + port, 0) // connect to website server
+            sendAT("AT+CIPSTART=\"TCP\",\"" + variot_ip + "\"," + variot_port, 0) // connect to website server
             variot_connected = waitResponse()
             basic.pause(100)
             if (variot_connected) {
                 last_upload_successful = false
                 let body: string = "{\"" + label + "\": " + value + "}"
-                //let str: string = "POST /api/v1/" + write_api_key + "/telemetry HTTP/1.1" + "\r\n" + "Content-Type: application/json" + "\r\n" + "Content-Length: " + body.length + "\r\n\r\n" + body + "\r\n\r\n"
                 let str: string = "POST /" + endpoint + " HTTP/1.1\r\n" + "Content-Type: application/json" + "\r\n" + "Content-Length: " + body.length + "\r\n\r\n" + body + "\r\n\r\n"
                 sendAT("AT+CIPSEND=" + str.length)
                 sendAT(str, 0) // upload data
