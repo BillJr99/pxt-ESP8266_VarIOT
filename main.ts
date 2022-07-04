@@ -61,7 +61,7 @@ namespace ESP8266VarIOT {
     }
 
     /**
-    * Connect to VarIOT and upload data. It would not upload anything if it failed to connect to Wifi or VarIOT.
+    * Configure VarIOT gateway location
     */
     //% block="Upload data to VarIOT|URL/IP = %ip|Port = %port"
     //% ip.defl=rpi4-variot
