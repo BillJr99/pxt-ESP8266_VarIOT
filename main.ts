@@ -89,6 +89,7 @@ namespace ESP8266VarIOT {
                 basic.pause(100)
                 sendAT("AT+CIPCLOSE") // close TCP connection
                 waitResponse()
+                variot_connected = false
             }
         }
     }
